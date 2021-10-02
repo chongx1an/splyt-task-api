@@ -12,13 +12,6 @@ import { DriverController } from './controllers/driver.controller';
 
 const server = new Koa();
 
-
-server.on('error', (err, ctx) => {
-    console.log(err);
-    console.log(ctx.status);
-});
-
-
 // Middleware
 server.use(cors());
 server.use(json());
