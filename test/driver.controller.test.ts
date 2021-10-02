@@ -26,7 +26,7 @@ describe("GET /drivers", () => {
     });
 
     it("should return 200 ok", async () => {
-        const query = new URLSearchParams({ latitude: "1", longitude: "1" });
+        const query = new URLSearchParams({ latitude: `${1.285194}`, longitude: `${103.8522982}` });
 
         const response = await request(server).get(`/drivers?${query.toString()}`);
         expect(response.statusCode).toBe(200);
@@ -35,8 +35,8 @@ describe("GET /drivers", () => {
     it('should return 400 error', async () => {
 
         const queries: URLSearchParams[] = [
-            new URLSearchParams({ latitude: "1", }),
-            new URLSearchParams({ longitude: "1" }),
+            new URLSearchParams({ latitude: `${1.285194}` }),
+            new URLSearchParams({ longitude: `${103.8522982}` }),
             new URLSearchParams({}),
         ]
 
@@ -48,11 +48,19 @@ describe("GET /drivers", () => {
     })
 
     it("should return 10 drivers", async () => {
-        const query = new URLSearchParams({ latitude: "1", longitude: "1" });
 
-        const response: GoodReponse = await request(server).get(`/drivers?${query.toString()}`);
+        const queries: URLSearchParams[] = [
+            new URLSearchParams({ latitude: `${1.285194}`, longitude: `${103.8522982}` }),
+            new URLSearchParams({ latitude: `${1.285194}`, longitude: `${103.8522982}`, count: `${1}` }),
+            new URLSearchParams({ latitude: `${1.285194}`, longitude: `${103.8522982}`, count: `${5}` }),
+        ]
 
-        expect(typeof response.body.pickup_eta).toBe("number");
-        expect(response.body.drivers.length).toBe(10);
+        for (const query of queries) {
+            const response: GoodReponse = await request(server).get(`/drivers?${query.toString()}`);
+
+            expect(typeof response.body.pickup_eta).toBe("number");
+            expect(response.body.drivers.length).toBe(+(query.get('count') || 10));
+        }
+
     });
 });
