@@ -44,7 +44,7 @@ describe('GET /drivers', () => {
     }
   })
 
-  it('should return 10 drivers', async () => {
+  it('should return N drivers', async () => {
     const queries: URLSearchParams[] = [
       new URLSearchParams({ latitude: `${1.285194}`, longitude: `${103.8522982}` }),
       new URLSearchParams({ latitude: `${1.285194}`, longitude: `${103.8522982}`, count: `${1}` }),
