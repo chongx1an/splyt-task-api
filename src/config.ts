@@ -1,13 +1,13 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv'
 
-dotenv.config({ path: ".env" });
+dotenv.config({ path: '.env' })
 
 export interface Config {
-    port: number;
+  port: number;
 }
 
 const config: Config = {
-    port: +(process.env.PORT || 4000)
-};
+  port: +(process.env.PORT || 4000)
+}
 
-export { config };
+export { config }
